@@ -27,3 +27,11 @@ function sizeGrid(gridNum) {
         }
     }
 }
+
+const gridBoxes = document.querySelectorAll(".gridBox");
+
+gridBoxes.forEach(function(box) {
+    box.addEventListener("mouseover", function() {
+        box.style.backgroundColor = "black";
+    })
+})
