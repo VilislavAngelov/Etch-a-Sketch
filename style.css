@@ -13,9 +13,10 @@ body {
 
 #sketchContainer {
     border: 1px solid black;
-    height: 480px;
-    width: 480px;
+    height: 800px;
+    width: 800px;
     display: flex;
+    user-select: none;
 }
 
 .gridCol {
@@ -24,11 +25,13 @@ body {
     flex-wrap: wrap;
     display: flex;
     flex-grow: 1;
+    user-select: none;
 }
 
 .gridBox {
-    border: 1px solid black;
+    outline: 1px solid black;
     flex-basis: 100%;
+    user-select: none;
 }
 
 #size-btn {
