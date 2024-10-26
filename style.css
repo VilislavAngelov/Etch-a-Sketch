@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+#sketchContainer {
+    border: 1px solid black;
+    height: 480px;
+    width: 480px;
+    display: flex;
+}
+
+.gridCol {
+    border: 1px solid black;
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    flex-grow: 1;
+}
+
+.gridBox {
+    border: 1px solid black;
+    flex-basis: 100%;
+}
+
