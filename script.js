@@ -1,10 +1,6 @@
-//BONUS
-//randomize color on each hover
-//Additionally, implement a progressive darkening effect where each interaction darkens the square by 10%. The goal is to achieve a fully black (or completely colored) square in only ten interactions. OPACITY.
-
 const sketchContainer = document.getElementById("sketchContainer");
-
 let gridNum = 16;
+let isMouseDown = false;
 
 sizeGrid(gridNum);
 
@@ -42,20 +38,48 @@ function paint() {
   const gridBoxes = document.querySelectorAll(".gridBox");
 
   gridBoxes.forEach((box) => {
+
     box.addEventListener("mousedown", () => {
-      box.style.backgroundColor = "black";
+      isMouseDown = true;
+      if (!box.style.backgroundColor) {
+        box.style.backgroundColor = randomColor();
+      } else {
+        increaseOpacity(box);
+      }
+    });
 
-      const paint = (e) => {
-        if (e.target.classList.contains("gridBox")) {
-          e.target.style.backgroundColor = "black";
-        }
-      };
+    box.addEventListener("mouseup", () => {
+      isMouseDown = false;
+    });
 
-      document.addEventListener("mousemove", paint);
-
-      document.addEventListener("mouseup", () => {
-        document.removeEventListener("mousemove", paint);
-      });
+    box.addEventListener("mouseenter", () => {
+      if (isMouseDown && box.style.backgroundColor) {
+        increaseOpacity(box);
+      } else if (isMouseDown && !box.style.backgroundColor) {
+        box.style.backgroundColor = randomColor();
+      }
     });
   });
+
+  document.addEventListener("mouseup", () => {
+    isMouseDown = false;
+  });
+}
+
+function randomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgba(${r}, ${g}, ${b}, 0.1)`;
+}
+
+function increaseOpacity(box) {
+  const currentColor = box.style.backgroundColor;
+  const [r, g, b, a] = currentColor.match(/[\d\.]+/g).map(Number);
+
+  if (a < 1) {
+    const newOpacity = Math.min(a + 0.1, 1).toFixed(1);
+    box.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${newOpacity})`;
+    box.dataset.opacity = newOpacity;
+  }
 }
