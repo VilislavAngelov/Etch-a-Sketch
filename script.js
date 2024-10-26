@@ -30,8 +30,21 @@ function sizeGrid(gridNum) {
 
 const gridBoxes = document.querySelectorAll(".gridBox");
 
-gridBoxes.forEach(function(box) {
-    box.addEventListener("mouseover", function() {
+gridBoxes.forEach(box => {
+    box.addEventListener("mousedown", () => {
         box.style.backgroundColor = "black";
-    })
-})
+
+        const paint = (e) => {
+            if (e.target.classList.contains("gridBox")) {
+                e.target.style.backgroundColor = "black";
+            }
+        };
+
+        document.addEventListener("mousemove", paint);
+        
+        document.addEventListener("mouseup", () => {
+            document.removeEventListener("mousemove", paint);
+        });
+    });
+});
+
