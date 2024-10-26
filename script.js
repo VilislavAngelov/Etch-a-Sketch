@@ -1,9 +1,5 @@
 //constraints
-//hover event to chage div's color and leave a trail mousedown or mouseup to start/stop
-//button to change grid size, asking via promt
-//Once entered, the existing grid should be removed, and a new grid should be generated in the same total space as before (e.g., 960px wide)
-//user input maximum is 100
-//button onClick function
+//remove the ability to drag on the grid and instead make it paint
 
 //BONUS
 //randomize color on each hover
@@ -14,6 +10,17 @@ const sketchContainer = document.getElementById("sketchContainer");
 let gridNum = 16;
 
 sizeGrid(gridNum);
+
+function askSize() {
+    gridNum = prompt("What size grid do you want?");
+        while(gridNum > 100) {
+            alert("Grid Size Should Be Less Than 100");
+            gridNum = prompt("What size grid do you want?");
+        }
+
+    clearGrid();
+    sizeGrid(gridNum);
+}
 
 function sizeGrid(gridNum) {
     for (let i = 0; i < gridNum; i++){
@@ -26,25 +33,35 @@ function sizeGrid(gridNum) {
             gridCol.appendChild(gridBox);
         }
     }
+
+    paint();
 }
 
-const gridBoxes = document.querySelectorAll(".gridBox");
+console.log("hello");
 
-gridBoxes.forEach(box => {
-    box.addEventListener("mousedown", () => {
-        box.style.backgroundColor = "black";
 
-        const paint = (e) => {
-            if (e.target.classList.contains("gridBox")) {
-                e.target.style.backgroundColor = "black";
-            }
-        };
+function clearGrid() {
+    document.getElementById("sketchContainer").innerHTML = "";
+}
 
-        document.addEventListener("mousemove", paint);
-        
-        document.addEventListener("mouseup", () => {
-            document.removeEventListener("mousemove", paint);
+function paint() {
+    const gridBoxes = document.querySelectorAll(".gridBox");
+
+    gridBoxes.forEach(box => {
+        box.addEventListener("mousedown", () => {
+            box.style.backgroundColor = "black";
+    
+            const paint = (e) => {
+                if (e.target.classList.contains("gridBox")) {
+                    e.target.style.backgroundColor = "black";
+                }
+            };
+    
+            document.addEventListener("mousemove", paint);
+            
+            document.addEventListener("mouseup", () => {
+                document.removeEventListener("mousemove", paint);
+            });
         });
     });
-});
-
+}
